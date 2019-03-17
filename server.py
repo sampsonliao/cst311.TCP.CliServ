@@ -8,7 +8,6 @@ from socket import *
 # Notice the use of SOCK_STREAM for TCP packets
 
 def messageLogger(msg):
-	time.sleep(0.5)
 	with log_lock:
 		clients.append(msg)
 
