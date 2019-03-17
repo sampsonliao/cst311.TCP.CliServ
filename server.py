@@ -24,8 +24,9 @@ def connection(serverPort):
 		while len(clients) < 2:
 			cv.wait()
 		cv.notify()
-	ack = joinMessage.join(clients).encode()
-	connectionSocket.sendto(ack, addr)
+	ack = joinMessage.join(clients)
+	print("ACK to be sent: ", ack)
+	connectionSocket.sendto(ack.encode(), addr)
 	connectionSocket.close()
 
 serverPortA = 12000
