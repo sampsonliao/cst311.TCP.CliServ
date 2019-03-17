@@ -1,7 +1,6 @@
 #TCPCapitalizationServer.py
 import threading
 import time
-from queue import Queue
 from socket import *
 
 # Create a TCP socket
