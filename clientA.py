@@ -7,7 +7,7 @@ serverName = 'localhost'
 serverPortA = 12000
 clientSocketA = socket(AF_INET, SOCK_STREAM)
 clientSocketA.connect((serverName,serverPortA))
-message = input('Enter your name:')
+message = input('Enter name of client followed by your name:')
 clientSocketA.send(message.encode())
 serverAck = clientSocketA.recv(1024)
 print ('From Server:', serverAck.decode())
