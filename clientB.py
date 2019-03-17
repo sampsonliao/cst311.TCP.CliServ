@@ -8,7 +8,7 @@ serverPortB = 13000
 clientSocketB = socket(AF_INET, SOCK_STREAM)
 clientSocketB.connect((serverName,serverPortB))
 message = input('Enter your name:')
-clientSocketB.send(("Client B:" + message).encode())
+clientSocketB.send(message.encode())
 serverAck = clientSocketB.recv(1024)
 print ('From Server:', serverAck.decode())
 clientSocketB.close()
