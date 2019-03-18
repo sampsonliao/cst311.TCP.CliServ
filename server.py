@@ -19,13 +19,14 @@ def connection(serverPort):
 	connectionSocket, addr = serverSocket.accept()
 	message, address = connectionSocket.recvfrom(1024)
 	msg = message.decode()
+	msg = msg[len("client"):].strip()
 	messageLogger(msg)
 	with cv:
 		while len(clients) < 2:
 			cv.wait()
 		cv.notify()
 	ack = joinMessage.join(clients)
-	print("ACK to be sent: ", ack)
+	print('ACK to be sent through port {}: {}'.format(serverPort, ack))
 	connectionSocket.sendto(ack.encode(), addr)
 	connectionSocket.close()
 

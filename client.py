@@ -19,7 +19,7 @@ serverName = 'localhost'
 clientSocket = socket(AF_INET, SOCK_STREAM)
 clientSocket.connect((serverName,serverPort))
 message = input('Enter your name:')
-message = "Client " + str(sys.argv[1]) + ": " + message
+message = "Client " + str(sys.argv[1]).capitalize() + ": " + message
 clientSocket.send(message.encode())
 serverAck = clientSocket.recv(1024)
 print ('From Server:', serverAck.decode())
