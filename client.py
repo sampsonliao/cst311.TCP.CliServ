@@ -1,4 +1,4 @@
-#client.py
+# client.py
 #to run this program use python3 client.py X
 #                    or  python3 client.py Y
 import threading
@@ -13,16 +13,13 @@ if(len(sys.argv) != 2):
 	print("Error. not enough arguments")
 	print("\ttry python3 client.py X or python3 client.py Y")
 	sys.exit()
-if(sys.argv[1] == "X" or sys.argv[1]=="x"):
-	serverPort = 12000
-elif(sys.argv[1] == "Y" or sys.argv[1] =="y"):
-	serverPort = 13000
-else:
-	print("Error.\\ttry python3 client.py X or python3 client.py Y")
+if not (sys.argv[1].capitalize() == "X" or sys.argv[1].capitalize() == "Y"):
+	print("Error.\ttry python3 client.py X or python3 client.py Y")
+	sys.exit()
 
-serverName = 'localhost'
+serverPort = 12000
 clientSocket = socket(AF_INET, SOCK_STREAM)
-clientSocket.connect((serverName,serverPort))
+clientSocket.connect(('',serverPort))
 message = input('Enter your name:')
 #the message format is  Client X: name entered by the user
 message = "Client " + str(sys.argv[1]).capitalize() + ": " + message
