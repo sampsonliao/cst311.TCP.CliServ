@@ -15,11 +15,8 @@ def messageLogger(msg):
 		clients.append(msg)
 
 def connection(serverPort):
-	serverSocket = socket(AF_INET,SOCK_STREAM)
-	# Assign IP address and port number to socket
-	serverSocket.bind(('',serverPort))
-	serverSocket.listen(1)
-	print ('The server (port {}) is ready to receive'.format(serverPort))
+	serverSocket.listen(2)
+	print ('{} - New connecton opened on port {}, ready to receive'.format(threading.current_thread().name, serverPort))
 	connectionSocket, addr = serverSocket.accept()
 	message, address = connectionSocket.recvfrom(1024)
 	msg = message.decode()
@@ -30,12 +27,11 @@ def connection(serverPort):
 			cv.wait()
 		cv.notify()
 	ack = joinMessage.join(clients)
-	print('ACK to be sent through port {}: {}'.format(serverPort, ack))
+	print('{} - ACK to be sent through port {}: {}'.format(threading.current_thread().name, serverPort, ack))
 	connectionSocket.sendto(ack.encode(), addr)
 	connectionSocket.close()
 
-serverPortA = 12000
-serverPortB = 13000
+serverPort = 12000
 
 clients = []
 joinMessage = " received before "
@@ -43,12 +39,16 @@ joinMessage = " received before "
 
 log_lock = threading.Lock()
 cv = threading.Condition()
-
-connAThread = threading.Thread(target=connection, args=(serverPortA,), daemon=True)
-connBThread = threading.Thread(target=connection, args=(serverPortB,), daemon=True)
+serverSocket = socket(AF_INET,SOCK_STREAM)
+# Assign IP address and port number to socket
+serverSocket.bind(('',serverPort))
+	
+connAThread = threading.Thread(target=connection, args=(serverPort,), daemon=True)
+connBThread = threading.Thread(target=connection, args=(serverPort,), daemon=True)
 connAThread.start()
 connBThread.start()
 connAThread.join()
 connBThread.join()
 print("Sent acknowledgment to both X and Y")
 print("Terminating...")
+serverSocket.close()
