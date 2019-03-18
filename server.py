@@ -1,4 +1,8 @@
-#TCPCapitalizationServer.py
+#server.py
+#In this program we are using threads because we are receiving two messages
+#from two clients. We have to send back an acknolegment of who sent a message
+#first. If we did not implement threads this program will not determine who
+#sent the first message but instead it would determine who connected first.
 import threading
 import time
 from socket import *
@@ -46,5 +50,5 @@ connAThread.start()
 connBThread.start()
 connAThread.join()
 connBThread.join()
-
+print("Sent acknowledgment to both X and Y")
 print("Terminating...")
