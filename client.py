@@ -1,4 +1,4 @@
-[2;2Rnt.py
+# client.py
 #to run this program use python3 client.py X
 #                    or  python3 client.py Y
 import threading
